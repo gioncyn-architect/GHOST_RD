@@ -1,0 +1,229 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+:root {
+    --bg-dark: #050507;
+    --neon-cyan: #00f0ff;
+    --neon-pink: #ff003c;
+    --neon-yellow: #fcee0a;
+    --glass-bg: rgba(15, 15, 20, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-main: #e0e0e0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+body {
+    background: linear-gradient(135deg, #050507 0%, #1a0b2e 100%);
+    color: var(--text-main);
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Glassmorphism Classes */
+.glass-header {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+}
+
+/* Area Editor Utama */
+#editorArea {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    transition: opacity 0.3s ease;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    z-index: 10;
+}
+
+.logo {
+    color: var(--text-main);
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+}
+
+.logo .glitch {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 8px var(--neon-cyan);
+}
+
+.controls {
+    display: flex;
+    gap: 8px;
+}
+
+/* Tombol Cyberpunk Dinamis */
+.cyber-btn {
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    border: 1px solid transparent;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.cyber-btn:active {
+    transform: scale(0.95);
+}
+
+.cyber-btn.danger { border-color: rgba(255, 0, 60, 0.5); color: var(--neon-pink); }
+.cyber-btn.danger:hover { background: var(--neon-pink); color: #000; box-shadow: 0 0 15px var(--neon-pink); }
+
+.cyber-btn.info { border-color: rgba(0, 240, 255, 0.5); color: var(--neon-cyan); }
+.cyber-btn.info:hover { background: var(--neon-cyan); color: #000; box-shadow: 0 0 15px var(--neon-cyan); }
+
+.cyber-btn.run { border-color: rgba(252, 238, 10, 0.5); color: var(--neon-yellow); }
+.cyber-btn.run:hover { background: var(--neon-yellow); color: #000; box-shadow: 0 0 15px var(--neon-yellow); }
+
+.glass-btn { border-color: var(--glass-border); }
+.glass-btn:hover { background: rgba(255,255,255,0.1); }
+
+/* Bagian Editor */
+.editor-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+}
+
+.tabs {
+    display: flex;
+    background: rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.tab-btn {
+    flex: 1;
+    background: transparent;
+    color: #888;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+.tab-btn.active {
+    color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.05);
+    text-shadow: 0 0 8px var(--neon-cyan);
+    border-bottom: 2px solid var(--neon-cyan);
+}
+
+.code-containers {
+    flex: 1;
+    position: relative;
+}
+
+.code-panel {
+    display: none;
+    height: 100%;
+    animation: fadeIn 0.3s ease;
+}
+
+.code-panel.active {
+    display: block;
+}
+
+/* Modifikasi CodeMirror agar menyatu dengan Glassmorphism */
+.CodeMirror {
+    height: 100% !important;
+    font-size: 14px;
+    background: transparent !important;
+    padding-top: 10px;
+}
+.CodeMirror-gutters {
+    background: rgba(0, 0, 0, 0.2) !important;
+    border-right: 1px solid var(--glass-border) !important;
+}
+
+/* Output Screen (Acode Style) */
+#outputScreen {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #fff;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+#outputScreen.show {
+    transform: translateY(0);
+}
+
+.output-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: var(--bg-dark); /* Dark header untuk output */
+    border-bottom: 2px solid var(--neon-yellow);
+}
+
+.output-title {
+    color: var(--neon-yellow);
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.iframe-container {
+    flex: 1;
+    background: #fff; /* Background putih untuk hasil render HTML */
+}
+
+#outputFrame {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+footer {
+    text-align: right;
+    padding: 5px 20px 10px;
+    color: rgba(255, 0, 60, 0.7);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+/* Animasi */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Responsif Mobile */
+@media (max-width: 600px) {
+    header { flex-direction: column; gap: 15px; }
+    .controls { flex-wrap: wrap; justify-content: center; width: 100%; }
+    .cyber-btn { flex: 1; text-align: center; font-size: 0.8rem; padding: 10px 5px;}
+    .editor-section { margin: 10px; border-radius: 8px; }
+}
