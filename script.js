@@ -136,7 +136,6 @@ function updateLanguageUI() {
     const labels = document.querySelectorAll('#saveModal label');
     // label tidak perlu diubah karena sudah pakai emoji
 }
-    });
     // Update juga output title jika ada attribute
     document.querySelectorAll('[data-id]').forEach(el => {
         if (el.tagName !== 'SPAN') {
