@@ -436,30 +436,28 @@ function saveFileDB() {
 }
 
 function openSaveFileModal() {
-    const folderName = prompt('Nama folder proyek:');
-    if (!folderName) return;
+    document.getElementById('saveModal').style.display = 'flex';
+}
 
-    const pilihan = confirm(
-        'OK = Simpan semua (HTML+CSS+JS)\nCancel = Pilih file tertentu'
-    );
+function closeSaveModal() {
+    document.getElementById('saveModal').style.display = 'none';
+}
 
-    if (pilihan) {
-        if (!fileDB[folderName]) fileDB[folderName] = {};
-        fileDB[folderName].html = htmlEditor.getValue();
-        fileDB[folderName].css = cssEditor.getValue();
-        fileDB[folderName].js = jsEditor.getValue();
-        saveFileDB();
-        alert('Semua file tersimpan di folder: ' + folderName);
-    } else {
-        const tipe = prompt('Simpan file apa? ketik: html / css / js');
-        if (!tipe) return;
-        if (!fileDB[folderName]) fileDB[folderName] = {};
-        if (tipe === 'html') fileDB[folderName].html = htmlEditor.getValue();
-        if (tipe === 'css') fileDB[folderName].css = cssEditor.getValue();
-        if (tipe === 'js') fileDB[folderName].js = jsEditor.getValue();
-        saveFileDB();
-        alert(`File ${tipe} tersimpan di folder: ${folderName}`);
-    }
+function confirmSaveFile() {
+    const folderName = document.getElementById('modalFolderName').value.trim();
+    if (!folderName) { alert('Nama folder tidak boleh kosong!'); return; }
+
+    if (!fileDB[folderName]) fileDB[folderName] = {};
+    if (document.getElementById('saveHTML').checked) fileDB[folderName].html = htmlEditor.getValue();
+    if (document.getElementById('saveCSS').checked) fileDB[folderName].css = cssEditor.getValue();
+    if (document.getElementById('saveJS').checked) fileDB[folderName].js = jsEditor.getValue();
+
+    saveFileDB();
+    closeSaveModal();
+    document.getElementById('modalFolderName').value = '';
+
+    const lang = localStorage.getItem('ghos_lang') || 'id';
+    alert(lang === 'id' ? 'File berhasil disimpan!' : 'File saved successfully!');
 }
 
 function renderFileManager() {
