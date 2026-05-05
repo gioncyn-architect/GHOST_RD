@@ -58,16 +58,18 @@
                 <button id="clearBtn" class="cyber-btn danger"><span data-id="Hapus" data-en="Clear">Hapus</span></button>
                 <button id="saveBtn" class="cyber-btn info"><span data-id="Simpan" data-en="Save">Simpan</span></button>
                 <button id="runBtn" class="cyber-btn run"><span data-id="Jalankan" data-en="Run Code">Jalankan</span></button>
+                <button id="saveFileBtn" class="cyber-btn info">💾 File</button>
                 <button id="copilotBtn" class="cyber-btn copilot"><span data-id="Co-pilot" data-en="Co-pilot">Co-pilot</span></button>
             </div>
         </header>
 
         <section class="editor-section glass-panel">
             <div class="tabs">
-                <button class="tab-btn active" onclick="switchTab('html')">HTML</button>
-                <button class="tab-btn" onclick="switchTab('css')">CSS</button>
-                <button class="tab-btn" onclick="switchTab('js')">JS</button>
-            </div>
+    <button class="tab-btn active" onclick="switchTab('html')">HTML</button>
+    <button class="tab-btn" onclick="switchTab('css')">CSS</button>
+    <button class="tab-btn" onclick="switchTab('js')">JS</button>
+    <button class="tab-btn" onclick="switchTab('files')">📁 FILES</button>
+</div>
             
             <div class="code-containers">
                 <div id="html-container" class="code-panel active">
@@ -79,6 +81,9 @@
                 <div id="js-container" class="code-panel">
                     <textarea id="jsCode"></textarea>
                 </div>
+                <div id="files-container" class="code-panel">
+    <div id="fileManagerUI" style="padding:12px;overflow-y:auto;height:100%;"></div>
+</div>
             </div>
         </section>
 
