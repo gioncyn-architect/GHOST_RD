@@ -108,7 +108,13 @@ function toggleLanguage() {
     document.getElementById('langModal').style.display = 'flex';
 }
 function closeLangModal() {
-    document.getElementById('langModal').style.display = 'none';
+    document.getElementById('langModal').style.display = 'none';  
+}
+function setLang(lang) {
+    isEnglish = (lang === 'en');
+    localStorage.setItem('ghos_lang', lang);
+    closeLangModal();
+    updateLanguageUI();
 }
 function updateLanguageUI() {
     const lang = isEnglish ? 'en' : 'id';
