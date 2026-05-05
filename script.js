@@ -1,3 +1,4 @@
+window.onerror = function(msg, src, line) { alert('ERROR baris ' + line + ': ' + msg); };
 // ============================================================
 // GHOS~RD EDITOR — script.js (Fixed & Complete)
 // ============================================================
