@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GHOS~VG Editor</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/monokai.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main id="editorArea">
+        <header class="glass-header">
+            <h1 class="logo">GHOS<span class="glitch">~VG</span></h1>
+            <div class="controls">
+                <button id="langToggle" class="cyber-btn glass-btn">ID / EN</button>
+                <button id="clearBtn" class="cyber-btn danger"><span data-id="Hapus" data-en="Clear">Hapus</span></button>
+                <button id="saveBtn" class="cyber-btn info"><span data-id="Simpan" data-en="Save">Simpan</span></button>
+                <button id="runBtn" class="cyber-btn run"><span data-id="Jalankan" data-en="Run Code">Jalankan</span></button>
+            </div>
+        </header>
+
+        <section class="editor-section glass-panel">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('html')">HTML</button>
+                <button class="tab-btn" onclick="switchTab('css')">CSS</button>
+                <button class="tab-btn" onclick="switchTab('js')">JS</button>
+            </div>
+            
+            <div class="code-containers">
+                <div id="html-container" class="code-panel active">
+                    <textarea id="htmlCode"></textarea>
+                </div>
+                <div id="css-container" class="code-panel">
+                    <textarea id="cssCode"></textarea>
+                </div>
+                <div id="js-container" class="code-panel">
+                    <textarea id="jsCode"></textarea>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>development Vivi gioncyn</p>
+        </footer>
+    </main>
+
+    <div id="outputScreen" class="hidden">
+        <div class="output-header glass-header">
+            <span class="output-title" data-id="HASIL RENDER" data-en="OUTPUT RENDER">HASIL RENDER</span>
+            <button id="backBtn" class="cyber-btn info"><span data-id="Kembali" data-en="Back">Kembali</span></button>
+        </div>
+        <div class="iframe-container">
+            <iframe id="outputFrame"></iframe>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/xml/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
+    
+    <script src="script.js"></script>
+</body>
+</html>
