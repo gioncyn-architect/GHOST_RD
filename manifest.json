@@ -1,0 +1,13 @@
+{
+    "name": "GHOS~RD Editor",
+    "short_name": "GHOS~RD",
+    "description": "Code editor by Vivi gioncyn",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#050507",
+    "theme_color": "#00f0ff",
+    "icons": [
+        { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+        { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+    ]
+}
