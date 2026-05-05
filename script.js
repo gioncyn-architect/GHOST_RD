@@ -471,9 +471,17 @@ function renderFileManager() {
     if (!ui) return;
     fileDB = JSON.parse(localStorage.getItem('ghos_files') || '{}');
     const folders = Object.keys(fileDB);
+    const lang = localStorage.getItem('ghos_lang') || 'id';
+
+    const t = {
+        noFile:       lang==='en' ? 'No saved files. Click 💾 File to save.' : 'Belum ada file tersimpan. Klik 💾 File untuk menyimpan.',
+        edit:         lang==='en' ? '✏️ Edit'          : '✏️ Edit',
+        downloadAll:  lang==='en' ? '⬇️ Download All'  : '⬇️ Download Semua',
+        deleteFolder: lang==='en' ? '🗑 Delete Folder' : '🗑 Hapus Folder',
+    };
 
     if (folders.length === 0) {
-        ui.innerHTML = '<p style="color:#888;padding:20px;">Belum ada file tersimpan. Klik 💾 File untuk menyimpan.</p>';
+        ui.innerHTML = `<p style="color:#888;padding:20px;">${t.noFile}</p>`;
         return;
     }
 
@@ -482,17 +490,17 @@ function renderFileManager() {
             <div style="color:#00f0ff;font-size:1rem;margin-bottom:8px;">📁 ${folder}</div>
             ${Object.keys(fileDB[folder]).map(type => `
                 <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
-                    <span style="color:#e0e0e0;">${type === 'html' ? '🌐' : type === 'css' ? '🎨' : '⚙️'} ${folder}.${type}</span>
+                    <span style="color:#e0e0e0;">${type==='html'?'🌐':type==='css'?'🎨':'⚙️'} ${folder}.${type}</span>
                     <div style="display:flex;gap:6px;">
-                        <button onclick="editFile('${folder}','${type}')" style="background:rgba(0,240,255,0.1);color:#00f0ff;border:1px solid rgba(0,240,255,0.3);padding:4px 8px;border-radius:4px;cursor:pointer;font-size:0.75rem;">✏️ Edit</button>
+                        <button onclick="editFile('${folder}','${type}')" style="background:rgba(0,240,255,0.1);color:#00f0ff;border:1px solid rgba(0,240,255,0.3);padding:4px 8px;border-radius:4px;cursor:pointer;font-size:0.75rem;">${t.edit}</button>
                         <button onclick="downloadFile('${folder}','${type}')" style="background:rgba(252,238,10,0.1);color:#fcee0a;border:1px solid rgba(252,238,10,0.3);padding:4px 8px;border-radius:4px;cursor:pointer;font-size:0.75rem;">⬇️</button>
                         <button onclick="deleteFile('${folder}','${type}')" style="background:rgba(255,0,60,0.1);color:#ff003c;border:1px solid rgba(255,0,60,0.3);padding:4px 8px;border-radius:4px;cursor:pointer;font-size:0.75rem;">🗑</button>
                     </div>
                 </div>
             `).join('')}
             <div style="margin-top:8px;display:flex;gap:6px;">
-                <button onclick="downloadFolder('${folder}')" style="background:rgba(180,0,255,0.1);color:#b400ff;border:1px solid rgba(180,0,255,0.3);padding:6px 10px;border-radius:4px;cursor:pointer;font-size:0.78rem;flex:1;">⬇️ Download Semua</button>
-                <button onclick="deleteFolder('${folder}')" style="background:rgba(255,0,60,0.1);color:#ff003c;border:1px solid rgba(255,0,60,0.3);padding:6px 10px;border-radius:4px;cursor:pointer;font-size:0.78rem;">🗑 Hapus Folder</button>
+                <button onclick="downloadFolder('${folder}')" style="background:rgba(180,0,255,0.1);color:#b400ff;border:1px solid rgba(180,0,255,0.3);padding:6px 10px;border-radius:4px;cursor:pointer;font-size:0.78rem;flex:1;">${t.downloadAll}</button>
+                <button onclick="deleteFolder('${folder}')" style="background:rgba(255,0,60,0.1);color:#ff003c;border:1px solid rgba(255,0,60,0.3);padding:6px 10px;border-radius:4px;cursor:pointer;font-size:0.78rem;">${t.deleteFolder}</button>
             </div>
         </div>
     `).join('');
