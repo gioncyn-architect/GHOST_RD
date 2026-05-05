@@ -142,7 +142,7 @@ function updateLanguageUI() {
             el.textContent = el.getAttribute(`data-${lang}`);
         }
     });
-
+}
 // ===== TEMA TERANG / GELAP =====
 function toggleTheme() {
     document.body.classList.toggle('light-mode');
