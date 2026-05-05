@@ -105,15 +105,37 @@ function closeOutput() {
 let isEnglish = false;
 
 function toggleLanguage() {
-    isEnglish = !isEnglish;
-    localStorage.setItem('ghos_lang', isEnglish ? 'en' : 'id');
-    updateLanguageUI();
+    document.getElementById('langModal').style.display = 'flex';
 }
-
+function closeLangModal() {
+    document.getElementById('langModal').style.display = 'none';
+}
 function updateLanguageUI() {
     const lang = isEnglish ? 'en' : 'id';
+
+    // Update semua span dengan data-id
     document.querySelectorAll('span[data-id]').forEach(el => {
         el.textContent = el.getAttribute(`data-${lang}`);
+    });
+
+    // Update tombol ID/EN
+    const langBtn = document.getElementById('langToggle');
+    if (langBtn) langBtn.textContent = isEnglish ? 'ID / EN' : 'ID / EN';
+
+    // Update judul modal simpan
+    const saveTitle = document.querySelector('#saveModal p');
+    if (saveTitle) saveTitle.textContent = isEnglish ? '💾 SAVE FILE' : '💾 SIMPAN FILE';
+
+    const folderInput = document.getElementById('modalFolderName');
+    if (folderInput) folderInput.placeholder = isEnglish ? 'Project folder name...' : 'Nama folder proyek...';
+
+    const saveBtn = document.querySelector('#saveModal button');
+    if (saveBtn) saveBtn.textContent = isEnglish ? '✅ Save' : '✅ Simpan';
+
+    // Update label checkbox
+    const labels = document.querySelectorAll('#saveModal label');
+    // label tidak perlu diubah karena sudah pakai emoji
+}
     });
     // Update juga output title jika ada attribute
     document.querySelectorAll('[data-id]').forEach(el => {
