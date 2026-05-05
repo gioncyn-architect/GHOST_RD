@@ -108,7 +108,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/xml/xml.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
-   
+   <script>
+window.onerror = function(msg, src, line) { alert('ERROR baris ' + line + ': ' + msg); }
+</script>
 <script src="script.js"></script>
 <!-- MODAL BAHASA -->
 <div id="langModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:3000;justify-content:center;align-items:center;">
