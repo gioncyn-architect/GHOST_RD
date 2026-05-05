@@ -1,7 +1,25 @@
 // ============================================================
 // GHOS~RD EDITOR — script.js (Fixed & Complete)
 // ============================================================
-
+// ===== MODAL NOTIFIKASI & KONFIRMASI =====
+function showNotif(msg) {
+    document.getElementById('notifMessage').textContent = msg;
+    document.getElementById('notifModal').style.display = 'flex';
+}
+function closeNotif() {
+    document.getElementById('notifModal').style.display = 'none';
+}
+function showConfirm(msg, onOk) {
+    document.getElementById('confirmMessage').textContent = msg;
+    document.getElementById('confirmModal').style.display = 'flex';
+    document.getElementById('confirmOkBtn').onclick = () => {
+        closeConfirm();
+        onOk();
+    };
+}
+function closeConfirm() {
+    document.getElementById('confirmModal').style.display = 'none';
+}
 // ===== KONFIGURASI CODEMIRROR =====
 const editorConfig = {
     theme: "monokai",
@@ -44,7 +62,7 @@ function saveCode() {
     localStorage.setItem('ghos_js', jsEditor.getValue());
 
     const lang = localStorage.getItem('ghos_lang') || 'id';
-    alert(lang === 'id' ? 'Kode berhasil disimpan!' : 'Code saved successfully!');
+    showNotif(lang === 'id' ? 'Kode berhasil disimpan!' : 'Code saved successfully!');
 }
 
 function loadCode() {
@@ -63,17 +81,16 @@ function loadCode() {
 }
 
 // ===== HAPUS SEMUA KODE =====
+
 function clearAll() {
     const lang = localStorage.getItem('ghos_lang') || 'id';
     const msg = lang === 'id' ? 'Yakin hapus semua kode?' : 'Are you sure to clear all code?';
-
-    if (confirm(msg)) {
+    showConfirm(msg, () => {
         htmlEditor.setValue('');
         cssEditor.setValue('');
         jsEditor.setValue('');
-    }
+    });
 }
-
 // ===== RUN CODE =====
 function runCode() {
     const html = htmlEditor.getValue();
@@ -445,7 +462,7 @@ function closeSaveModal() {
 
 function confirmSaveFile() {
     const folderName = document.getElementById('modalFolderName').value.trim();
-    if (!folderName) { alert('Nama folder tidak boleh kosong!'); return; }
+    if (!folderName) { showNotif('Nama folder tidak boleh kosong!'); return; }
 
     if (!fileDB[folderName]) fileDB[folderName] = {};
     if (document.getElementById('saveHTML').checked) fileDB[folderName].html = htmlEditor.getValue();
@@ -457,9 +474,8 @@ function confirmSaveFile() {
     document.getElementById('modalFolderName').value = '';
 
     const lang = localStorage.getItem('ghos_lang') || 'id';
-    alert(lang === 'id' ? 'File berhasil disimpan!' : 'File saved successfully!');
+    showNotif(lang === 'id' ? 'File berhasil disimpan!' : 'File saved successfully!');
 }
-
 function renderFileManager() {
     const ui = document.getElementById('fileManagerUI');
     if (!ui) return;
@@ -539,16 +555,25 @@ function downloadFolder(folder) {
 }
 
 function deleteFile(folder, type) {
-    if (!confirm(`Hapus file ${type} dari folder ${folder}?`)) return;
-    delete fileDB[folder][type];
-    if (Object.keys(fileDB[folder]).length === 0) delete fileDB[folder];
-    saveFileDB();
-    renderFileManager();
+    showConfirm(`Hapus file ${type} dari folder ${folder}?`, () => {
+        delete fileDB[folder][type];
+        if (Object.keys(fileDB[folder]).length === 0) delete fileDB[folder];
+        saveFileDB();
+        renderFileManager();
+    });
 }
-
 function deleteFolder(folder) {
-    if (!confirm(`Hapus seluruh folder ${folder}?`)) return;
-    delete fileDB[folder];
-    saveFileDB();
-    renderFileManager();
+    showConfirm(`Hapus seluruh folder ${folder}?`, () => {
+        delete fileDB[folder];
+        saveFileDB();
+        renderFileManager();
+    });
+}
+// ===== PWA SERVICE WORKER =====
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+            .then(reg => console.log('SW registered'))
+            .catch(err => console.log('SW error:', err));
+    });
 }
