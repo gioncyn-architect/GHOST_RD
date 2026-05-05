@@ -135,5 +135,23 @@
         </div>
     </div>
 </div>
+    <!-- MODAL NOTIFIKASI -->
+<div id="notifModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;justify-content:center;align-items:center;">
+    <div style="background:#0f0f14;border:1px solid rgba(0,240,255,0.3);border-radius:12px;padding:24px;width:280px;text-align:center;">
+        <p id="notifMessage" style="color:#e0e0e0;margin-bottom:16px;font-family:'Share Tech Mono',monospace;"></p>
+        <button onclick="closeNotif()" style="padding:10px 24px;background:rgba(0,240,255,0.15);color:#00f0ff;border:1px solid rgba(0,240,255,0.4);border-radius:8px;cursor:pointer;font-family:'Share Tech Mono',monospace;">OK</button>
+    </div>
+</div>
+
+<!-- MODAL KONFIRMASI -->
+<div id="confirmModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;justify-content:center;align-items:center;">
+    <div style="background:#0f0f14;border:1px solid rgba(255,0,60,0.3);border-radius:12px;padding:24px;width:280px;text-align:center;">
+        <p id="confirmMessage" style="color:#e0e0e0;margin-bottom:16px;font-family:'Share Tech Mono',monospace;"></p>
+        <div style="display:flex;gap:8px;justify-content:center;">
+            <button id="confirmOkBtn" style="padding:10px 24px;background:rgba(255,0,60,0.15);color:#ff003c;border:1px solid rgba(255,0,60,0.4);border-radius:8px;cursor:pointer;font-family:'Share Tech Mono',monospace;">OK</button>
+            <button onclick="closeConfirm()" style="padding:10px 16px;background:transparent;color:#888;border:1px solid rgba(255,255,255,0.1);border-radius:8px;cursor:pointer;font-family:'Share Tech Mono',monospace;">Batal</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
