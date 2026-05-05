@@ -5,9 +5,16 @@
     --neon-cyan: #00f0ff;
     --neon-pink: #ff003c;
     --neon-yellow: #fcee0a;
+    --neon-purple: #b400ff;
     --glass-bg: rgba(15, 15, 20, 0.6);
     --glass-border: rgba(255, 255, 255, 0.1);
     --text-main: #e0e0e0;
+
+    /* Tema Terang */
+    --light-bg: #f0f2f5;
+    --light-glass: rgba(255, 255, 255, 0.7);
+    --light-border: rgba(0, 0, 0, 0.1);
+    --light-text: #1a1a2e;
 }
 
 * {
@@ -22,9 +29,95 @@ body {
     color: var(--text-main);
     height: 100vh;
     overflow: hidden;
+    transition: background 0.4s ease, color 0.4s ease;
 }
 
-/* Glassmorphism Classes */
+/* ===== TEMA TERANG ===== */
+body.light-mode {
+    background: linear-gradient(135deg, #e8eaf6 0%, #f3e5f5 100%);
+    color: var(--light-text);
+}
+
+body.light-mode .glass-header {
+    background: rgba(255, 255, 255, 0.75);
+    border-bottom: 1px solid var(--light-border);
+}
+
+body.light-mode .glass-panel {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--light-border);
+}
+
+body.light-mode .logo {
+    color: var(--light-text);
+}
+
+body.light-mode .tab-btn {
+    color: #555;
+}
+
+body.light-mode .tabs {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+body.light-mode .CodeMirror {
+    background: rgba(255,255,255,0.3) !important;
+    color: #1a1a2e !important;
+}
+
+body.light-mode .CodeMirror-gutters {
+    background: rgba(0,0,0,0.05) !important;
+}
+
+body.light-mode footer {
+    color: rgba(100, 0, 60, 0.6);
+}
+
+body.light-mode .cyber-btn {
+    background: rgba(255,255,255,0.4);
+    color: #1a1a2e;
+}
+
+body.light-mode .copilot-panel {
+    background: rgba(240, 235, 255, 0.97);
+    border-left: 1px solid rgba(180, 0, 255, 0.3);
+}
+
+body.light-mode .copilot-title {
+    color: #7700cc;
+    text-shadow: 0 0 8px rgba(119,0,204,0.3);
+}
+
+body.light-mode .chat-bubble.system {
+    background: rgba(0,0,0,0.05);
+    color: #555;
+}
+
+body.light-mode .chat-bubble.ai {
+    background: rgba(0, 180, 255, 0.1);
+    color: #1a1a2e;
+}
+
+body.light-mode .chat-bubble.user {
+    background: rgba(180, 0, 255, 0.1);
+    color: #1a1a2e;
+}
+
+body.light-mode .copilot-select,
+body.light-mode .copilot-input,
+body.light-mode .copilot-textarea {
+    background: rgba(255,255,255,0.8);
+    color: #1a1a2e;
+    border-color: rgba(180, 0, 255, 0.3);
+}
+
+/* Tombol Tema */
+#themeToggle {
+    font-size: 1.1rem;
+    padding: 8px 12px;
+}
+
+/* ===== GLASSMORPHISM ===== */
 .glass-header {
     background: var(--glass-bg);
     backdrop-filter: blur(12px);
@@ -40,7 +133,7 @@ body {
     border-radius: 12px;
 }
 
-/* Area Editor Utama */
+/* ===== AREA EDITOR UTAMA ===== */
 #editorArea {
     display: flex;
     flex-direction: column;
@@ -52,14 +145,17 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 20px;
+    padding: 10px 15px;
     z-index: 10;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .logo {
     color: var(--text-main);
     font-size: 1.4rem;
     letter-spacing: 2px;
+    flex-shrink: 0;
 }
 
 .logo .glitch {
@@ -69,21 +165,24 @@ header {
 
 .controls {
     display: flex;
-    gap: 8px;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: flex-end;
 }
 
-/* Tombol Cyberpunk Dinamis */
+/* ===== TOMBOL CYBERPUNK ===== */
 .cyber-btn {
     background: rgba(0, 0, 0, 0.3);
     color: white;
     border: 1px solid transparent;
-    padding: 8px 15px;
+    padding: 7px 12px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     text-transform: uppercase;
     transition: all 0.3s ease;
     backdrop-filter: blur(5px);
+    white-space: nowrap;
 }
 
 .cyber-btn:active {
@@ -99,15 +198,18 @@ header {
 .cyber-btn.run { border-color: rgba(252, 238, 10, 0.5); color: var(--neon-yellow); }
 .cyber-btn.run:hover { background: var(--neon-yellow); color: #000; box-shadow: 0 0 15px var(--neon-yellow); }
 
+.cyber-btn.copilot { border-color: rgba(180, 0, 255, 0.5); color: var(--neon-purple); }
+.cyber-btn.copilot:hover { background: var(--neon-purple); color: #fff; box-shadow: 0 0 15px var(--neon-purple); }
+
 .glass-btn { border-color: var(--glass-border); }
 .glass-btn:hover { background: rgba(255,255,255,0.1); }
 
-/* Bagian Editor */
+/* ===== BAGIAN EDITOR ===== */
 .editor-section {
     flex: 1;
     display: flex;
     flex-direction: column;
-    margin: 15px;
+    margin: 10px 15px 5px;
     overflow: hidden;
     box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
 }
@@ -140,6 +242,7 @@ header {
 .code-containers {
     flex: 1;
     position: relative;
+    overflow: hidden;
 }
 
 .code-panel {
@@ -150,21 +253,34 @@ header {
 
 .code-panel.active {
     display: block;
+    height: 100%;
 }
 
-/* Modifikasi CodeMirror agar menyatu dengan Glassmorphism */
+/* ===== CODEMIRROR — SCROLL DIPERBAIKI ===== */
 .CodeMirror {
     height: 100% !important;
     font-size: 14px;
     background: transparent !important;
     padding-top: 10px;
+    overflow-y: auto !important;
 }
+
+.CodeMirror-scroll {
+    overflow-y: auto !important;
+    overflow-x: auto !important;
+    min-height: 100%;
+}
+
 .CodeMirror-gutters {
     background: rgba(0, 0, 0, 0.2) !important;
     border-right: 1px solid var(--glass-border) !important;
 }
 
-/* Output Screen (Acode Style) */
+.CodeMirror-lines {
+    padding-bottom: 40px;
+}
+
+/* ===== OUTPUT SCREEN ===== */
 #outputScreen {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -185,7 +301,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background: var(--bg-dark); /* Dark header untuk output */
+    background: var(--bg-dark);
     border-bottom: 2px solid var(--neon-yellow);
 }
 
@@ -197,7 +313,8 @@ header {
 
 .iframe-container {
     flex: 1;
-    background: #fff; /* Background putih untuk hasil render HTML */
+    background: #fff;
+    overflow: auto;
 }
 
 #outputFrame {
@@ -206,24 +323,251 @@ header {
     border: none;
 }
 
+/* ===== SIMPAN KE FILE — TOMBOL DOWNLOAD ===== */
+.save-options {
+    display: flex;
+    gap: 6px;
+    padding: 8px 15px;
+    background: rgba(0,0,0,0.3);
+    border-top: 1px solid var(--glass-border);
+    justify-content: flex-end;
+}
+
+/* ===== FOOTER ===== */
 footer {
     text-align: right;
-    padding: 5px 20px 10px;
+    padding: 4px 20px 8px;
     color: rgba(255, 0, 60, 0.7);
     font-size: 0.8rem;
     letter-spacing: 1px;
 }
 
-/* Animasi */
+/* ===== ANIMASI ===== */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
 }
 
-/* Responsif Mobile */
+/* ===== CO-PILOT PANEL ===== */
+.copilot-panel {
+    position: fixed;
+    top: 0; right: 0;
+    width: 340px;
+    height: 100vh;
+    background: rgba(10, 5, 20, 0.97);
+    backdrop-filter: blur(20px);
+    border-left: 1px solid rgba(180, 0, 255, 0.4);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: -5px 0 40px rgba(180, 0, 255, 0.2);
+}
+
+.copilot-panel.open {
+    transform: translateX(0);
+}
+
+.copilot-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+
+.copilot-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.copilot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(180, 0, 255, 0.3);
+    background: rgba(180, 0, 255, 0.08);
+    flex-shrink: 0;
+}
+
+.copilot-title {
+    color: var(--neon-purple);
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px var(--neon-purple);
+}
+
+.copilot-setup {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    flex-shrink: 0;
+}
+
+.copilot-select {
+    background: rgba(0,0,0,0.5);
+    color: #e0e0e0;
+    border: 1px solid rgba(180, 0, 255, 0.4);
+    border-radius: 6px;
+    padding: 9px 10px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.85rem;
+    width: 100%;
+    cursor: pointer;
+    outline: none;
+}
+
+.api-key-row {
+    display: flex;
+    gap: 6px;
+}
+
+.copilot-input {
+    flex: 1;
+    background: rgba(0,0,0,0.5);
+    color: #e0e0e0;
+    border: 1px solid rgba(180, 0, 255, 0.4);
+    border-radius: 6px;
+    padding: 9px 10px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.85rem;
+    outline: none;
+}
+
+.copilot-chat {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.chat-bubble {
+    padding: 10px 13px;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    max-width: 95%;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.chat-bubble.system {
+    background: rgba(255,255,255,0.05);
+    color: #888;
+    border: 1px solid rgba(255,255,255,0.1);
+    align-self: center;
+    text-align: center;
+}
+
+.chat-bubble.user {
+    background: rgba(180, 0, 255, 0.15);
+    border: 1px solid rgba(180, 0, 255, 0.3);
+    color: #e0e0e0;
+    align-self: flex-end;
+}
+
+.chat-bubble.ai {
+    background: rgba(0, 240, 255, 0.08);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    color: #e0e0e0;
+    align-self: flex-start;
+}
+
+.chat-bubble.error {
+    background: rgba(255, 0, 60, 0.1);
+    border: 1px solid rgba(255, 0, 60, 0.3);
+    color: #ff6688;
+    align-self: center;
+}
+
+.copilot-input-row {
+    padding: 12px 16px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.copilot-textarea {
+    background: rgba(0,0,0,0.4);
+    color: #e0e0e0;
+    border: 1px solid rgba(180, 0, 255, 0.3);
+    border-radius: 6px;
+    padding: 9px 10px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.82rem;
+    resize: none;
+    height: 70px;
+    width: 100%;
+    outline: none;
+}
+
+.copilot-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.copilot-actions .cyber-btn {
+    flex: 1;
+    font-size: 0.78rem;
+    padding: 9px 4px;
+}
+
+/* ===== RESPONSIF MOBILE ===== */
 @media (max-width: 600px) {
-    header { flex-direction: column; gap: 15px; }
-    .controls { flex-wrap: wrap; justify-content: center; width: 100%; }
-    .cyber-btn { flex: 1; text-align: center; font-size: 0.8rem; padding: 10px 5px;}
-    .editor-section { margin: 10px; border-radius: 8px; }
+    header {
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 8px 12px;
+        gap: 6px;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .controls {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5px;
+        width: 100%;
+    }
+
+    .cyber-btn {
+        text-align: center;
+        font-size: 0.72rem;
+        padding: 8px 4px;
+        border-radius: 6px;
+    }
+
+    .editor-section {
+        margin: 6px 8px 4px;
+        border-radius: 8px;
+    }
+
+    .copilot-panel {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid rgba(180,0,255,0.4);
+        height: 85vh;
+        top: auto;
+        bottom: 0;
+        transform: translateY(100%);
+    }
+
+    .copilot-panel.open {
+        transform: translateY(0);
+    }
 }
