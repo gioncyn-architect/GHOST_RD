@@ -571,3 +571,27 @@ footer {
         transform: translateY(0);
     }
 }
+/* ===== FIX: SELECT & INPUT IKUT TEMA ===== */
+.copilot-select option {
+    background: #0f0f1a;
+    color: #e0e0e0;
+}
+
+select, input[type="password"], input[type="text"], textarea {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+#saveModal input[type="text"],
+#saveModal input[type="password"],
+#saveModal input:not([type="checkbox"]) {
+    background: rgba(0,0,0,0.6) !important;
+    color: #e0e0e0 !important;
+    border: 1px solid rgba(0,240,255,0.3) !important;
+    border-radius: 6px;
+    padding: 10px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.9rem;
+    outline: none;
+    width: 100%;
+}
