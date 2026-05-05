@@ -7,11 +7,49 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/monokai.min.css">
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- CO-PILOT PANEL -->
+    <div id="copilotPanel" class="copilot-panel">
+        <div class="copilot-header">
+            <span class="copilot-title">⚡ CO-PILOT AI</span>
+            <button id="closeCopilot" class="cyber-btn danger">✕</button>
+        </div>
+
+        <div class="copilot-setup">
+            <select id="aiProvider" class="copilot-select">
+                <option value="">— Pilih AI —</option>
+                <option value="openai">ChatGPT (OpenAI)</option>
+                <option value="claude">Claude (Anthropic)</option>
+                <option value="gemini">Gemini (Google)</option>
+                <option value="mistral">Mistral AI</option>
+                <option value="groq">Groq (LLaMA)</option>
+            </select>
+
+            <div class="api-key-row">
+                <input type="password" id="apiKeyInput" class="copilot-input" placeholder="Masukkan API Key...">
+                <button id="toggleKey" class="cyber-btn glass-btn">👁</button>
+            </div>
+            <button id="saveApiKey" class="cyber-btn info" style="width:100%">Simpan Key</button>
+        </div>
+
+        <div class="copilot-chat" id="copilotChat">
+            <div class="chat-bubble system">Pilih AI dan masukkan API Key untuk mulai.</div>
+        </div>
+
+        <div class="copilot-input-row">
+            <textarea id="copilotPrompt" class="copilot-textarea" placeholder="Tanya AI atau minta bantu perbaiki code..."></textarea>
+            <div class="copilot-actions">
+                <button id="analyzeBtn" class="cyber-btn run">📋 Analisis Code</button>
+                <button id="sendCopilot" class="cyber-btn info">▶ Kirim</button>
+            </div>
+        </div>
+    </div>
+    <div id="copilotOverlay" class="copilot-overlay"></div>
+
+    <!-- EDITOR UTAMA -->
     <main id="editorArea">
         <header class="glass-header">
             <h1 class="logo">GHOS<span class="glitch">~RD</span></h1>
@@ -20,6 +58,7 @@
                 <button id="clearBtn" class="cyber-btn danger"><span data-id="Hapus" data-en="Clear">Hapus</span></button>
                 <button id="saveBtn" class="cyber-btn info"><span data-id="Simpan" data-en="Save">Simpan</span></button>
                 <button id="runBtn" class="cyber-btn run"><span data-id="Jalankan" data-en="Run Code">Jalankan</span></button>
+                <button id="copilotBtn" class="cyber-btn copilot"><span data-id="Co-pilot" data-en="Co-pilot">Co-pilot</span></button>
             </div>
         </header>
 
@@ -48,6 +87,7 @@
         </footer>
     </main>
 
+    <!-- OUTPUT SCREEN -->
     <div id="outputScreen" class="hidden">
         <div class="output-header glass-header">
             <span class="output-title" data-id="HASIL RENDER" data-en="OUTPUT RENDER">HASIL RENDER</span>
@@ -58,11 +98,12 @@
         </div>
     </div>
 
+    <!-- SCRIPTS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/xml/xml.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
-    
     <script src="script.js"></script>
+
 </body>
 </html>
