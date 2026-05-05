@@ -33,6 +33,7 @@ function switchTab(tabName) {
         if (tabName === 'html') htmlEditor.refresh();
         if (tabName === 'css') cssEditor.refresh();
         if (tabName === 'js') jsEditor.refresh();
+        if (tabName === 'files') renderFileManager();
     }, 10);
 }
 
@@ -354,6 +355,7 @@ function analyzeCode() {
 
 // ===== EVENT LISTENERS =====
 document.getElementById('saveBtn').addEventListener('click', saveCode);
+document.getElementById('saveFileBtn').addEventListener('click', openSaveFileModal);
 document.getElementById('clearBtn').addEventListener('click', clearAll);
 document.getElementById('runBtn').addEventListener('click', runCode);
 document.getElementById('backBtn').addEventListener('click', closeOutput);
@@ -408,3 +410,121 @@ window.onload = () => {
         jsEditor.refresh();
     }, 200);
 };
+// ===== FILE MANAGER =====
+let fileDB = JSON.parse(localStorage.getItem('ghos_files') || '{}');
+
+function saveFileDB() {
+    localStorage.setItem('ghos_files', JSON.stringify(fileDB));
+}
+
+function openSaveFileModal() {
+    const folderName = prompt('Nama folder proyek:');
+    if (!folderName) return;
+
+    const pilihan = confirm(
+        'OK = Simpan semua (HTML+CSS+JS)\nCancel = Pilih file tertentu'
+    );
+
+    if (pilihan) {
+        if (!fileDB[folderName]) fileDB[folderName] = {};
+        fileDB[folderName].html = htmlEditor.getValue();
+        fileDB[folderName].css = cssEditor.getValue();
+        fileDB[folderName].js = jsEditor.getValue();
+        saveFileDB();
+        alert('Semua file tersimpan di folder: ' + folderName);
+    } else {
+        const tipe = prompt('Simpan file apa? ketik: html / css / js');
+        if (!tipe) return;
+        if (!fileDB[folderName]) fileDB[folderName] = {};
+        if (tipe === 'html') fileDB[folderName].html = htmlEditor.getValue();
+        if (tipe === 'css') fileDB[folderName].css = cssEditor.getValue();
+        if (tipe === 'js') fileDB[folderName].js = jsEditor.getValue();
+        saveFileDB();
+        alert(`File ${tipe} tersimpan di folder: ${folderName}`);
+    }
+}
+
+function renderFileManager() {
+    const ui = document.getElementById('fileManagerUI');
+    if (!ui) return;
+    fileDB = JSON.parse(localStorage.getItem('ghos_files') || '{}');
+    const folders = Object.keys(fileDB);
+
+    if (folders.length === 0) {
+        ui.innerHTML = '<p style="color:#888;padding:20px;">Belum ada file tersimpan. Klik 💾 File untuk menyimpan.</p>';
+        return;
+    }
+
+    ui.innerHTML = folders.map(folder => `
+        <div style="margin-bottom:16px;border:1px solid rgba(0,240,255,0.2);border-radius:8px;padding:12px;">
+            <div style="color:#00f0ff;font-size:1rem;margin-bottom:8px;">📁 ${folder}</div>
+            ${Object.keys(fileDB[folder]).map(type => `
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+                    <span style="color:#e0e0e0;">${type === 'html' ? '🌐' : type === 'css' ? '🎨' : '⚙️'} ${folder}.${type}</span>
+                    <div style="display:flex;gap:6px;">
+                        <button onclick="editFile('${folder}','${type}')" style="background:rgba(0,240,255,0.1);color:#00f0ff;border:1px solid rgba(0,240,255,0.3);padding:4px 8px;border-radius:4px;cursor:pointer;font-size:0.75rem;">✏️ Edit</button>
+                        <button onclick="downloadFile('${folder}','${type}')" style="background:rgba(252,238,10,0.1);color:#fcee0a;border:1px solid rgba(252,238,10,0.3);padding:4px 8px;border-radius:4px;cursor:pointer;font-size:0.75rem;">⬇️</button>
+                        <button onclick="deleteFile('${folder}','${type}')" style="background:rgba(255,0,60,0.1);color:#ff003c;border:1px solid rgba(255,0,60,0.3);padding:4px 8px;border-radius:4px;cursor:pointer;font-size:0.75rem;">🗑</button>
+                    </div>
+                </div>
+            `).join('')}
+            <div style="margin-top:8px;display:flex;gap:6px;">
+                <button onclick="downloadFolder('${folder}')" style="background:rgba(180,0,255,0.1);color:#b400ff;border:1px solid rgba(180,0,255,0.3);padding:6px 10px;border-radius:4px;cursor:pointer;font-size:0.78rem;flex:1;">⬇️ Download Semua</button>
+                <button onclick="deleteFolder('${folder}')" style="background:rgba(255,0,60,0.1);color:#ff003c;border:1px solid rgba(255,0,60,0.3);padding:6px 10px;border-radius:4px;cursor:pointer;font-size:0.78rem;">🗑 Hapus Folder</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function editFile(folder, type) {
+    const code = fileDB[folder][type];
+    if (type === 'html') { htmlEditor.setValue(code); switchTabDirect('html'); }
+    if (type === 'css') { cssEditor.setValue(code); switchTabDirect('css'); }
+    if (type === 'js') { jsEditor.setValue(code); switchTabDirect('js'); }
+}
+
+function switchTabDirect(tabName) {
+    document.querySelectorAll('.code-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(`${tabName}-container`).classList.add('active');
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        if (btn.textContent.toLowerCase().includes(tabName)) btn.classList.add('active');
+    });
+    setTimeout(() => {
+        if (tabName === 'html') htmlEditor.refresh();
+        if (tabName === 'css') cssEditor.refresh();
+        if (tabName === 'js') jsEditor.refresh();
+    }, 10);
+}
+
+function downloadFile(folder, type) {
+    const code = fileDB[folder][type];
+    const ext = type === 'js' ? 'js' : type;
+    const blob = new Blob([code], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `${folder}.${ext}`;
+    a.click();
+}
+
+function downloadFolder(folder) {
+    const files = fileDB[folder];
+    Object.keys(files).forEach(type => {
+        setTimeout(() => downloadFile(folder, type), 300);
+    });
+}
+
+function deleteFile(folder, type) {
+    if (!confirm(`Hapus file ${type} dari folder ${folder}?`)) return;
+    delete fileDB[folder][type];
+    if (Object.keys(fileDB[folder]).length === 0) delete fileDB[folder];
+    saveFileDB();
+    renderFileManager();
+}
+
+function deleteFolder(folder) {
+    if (!confirm(`Hapus seluruh folder ${folder}?`)) return;
+    delete fileDB[folder];
+    saveFileDB();
+    renderFileManager();
+}
