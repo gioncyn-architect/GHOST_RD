@@ -84,12 +84,16 @@ function loadCode() {
 
 function clearAll() {
     const lang = localStorage.getItem('ghos_lang') || 'id';
-    const msg = lang === 'id' ? 'Yakin hapus semua kode?' : 'Are you sure to clear all code?';
+    const msg = lang === 'id' ? 'Yakin hapus kode di tab ini?' : 'Clear code in this tab?';
+
     showConfirm(msg, () => {
-        htmlEditor.setValue('');
-        cssEditor.setValue('');
-        jsEditor.setValue('');
+        const tabAktif = document.querySelector('.tab.active')?.dataset.tab;
+
+        if (tabAktif === 'html') htmlEditor.setValue('');
+        else if (tabAktif === 'css') cssEditor.setValue('');
+        else if (tabAktif === 'js') jsEditor.setValue('');
     });
+}
 }
 // ===== RUN CODE =====
 function runCode() {
