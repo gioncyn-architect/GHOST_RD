@@ -95,7 +95,6 @@ function clearAll() {
     });
 }
 
-}
 // ===== RUN CODE =====
 function runCode() {
     const html = htmlEditor.getValue();
