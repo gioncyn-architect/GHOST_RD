@@ -87,13 +87,14 @@ function clearAll() {
     const msg = lang === 'id' ? 'Yakin hapus kode di tab ini?' : 'Clear code in this tab?';
 
     showConfirm(msg, () => {
-        const tabAktif = document.querySelector('.tab.active')?.dataset.tab;
+        const tabAktif = document.querySelector('.code-panel.active')?.id.replace('-container', '');
 
         if (tabAktif === 'html') htmlEditor.setValue('');
         else if (tabAktif === 'css') cssEditor.setValue('');
         else if (tabAktif === 'js') jsEditor.setValue('');
     });
 }
+
 }
 // ===== RUN CODE =====
 function runCode() {
